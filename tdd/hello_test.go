@@ -3,7 +3,7 @@ package main
 import "testing"
 
 func TestHello(t *testing.T) {
-	got := Hello()
+	got := Hello("")
 
 	want := "Hello, World!"
 
@@ -12,8 +12,8 @@ func TestHello(t *testing.T) {
 	}
 }
 
-func TestHelloName(t *testing.T) {
-	got := HelloName("Abdel")
+func TestHelloWithName(t *testing.T) {
+	got := Hello("Abdel")
 	want := "Hello, Abdel!"
 
 	if got != want {
