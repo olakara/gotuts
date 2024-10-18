@@ -23,6 +23,15 @@ func TestRepeat(t *testing.T) {
 			t.Errorf("Expected %q but got %q", result, repeated)
 		}
 	})
+
+	t.Run("should return empty string if asked to repeat 0 times", func(t *testing.T) {
+		repeated := Repeat("a", 0)
+		result := ""
+
+		if repeated != result {
+			t.Errorf("Expected 0 but got %q", repeated)
+		}
+	})
 }
 
 func BenchmarkRepeat(b *testing.B) {
