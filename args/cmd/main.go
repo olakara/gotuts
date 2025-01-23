@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"hello"
 	"os"
 )
 
@@ -11,6 +12,6 @@ func main() {
 		fmt.Println("Please provide a name")
 		os.Exit(1)
 	}
-	fmt.Printf("Hello %s\n", os.Args[1])
+	fmt.Printf(hello.Say(os.Args[1]))
 
 }
