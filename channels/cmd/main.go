@@ -1,14 +1,26 @@
 package main
 
-import "fmt"
-
 func GetMessage(myChannel chan string) {
-	myChannel <- "Hello"
+	myChannel <- "Hello from function"
 }
 
 func main() {
 	myChannel := make(chan string)
+	anotherChannel := make(chan string)
+
 	go GetMessage(myChannel)
-	message := <-myChannel
-	fmt.Println("Message from channel: ", message)
+
+	go func() {
+		myChannel <- "Hello from channel"
+	}()
+	go func() {
+		anotherChannel <- "Hello from another channel"
+	}()
+
+	select {
+	case msg := <-myChannel:
+		println(msg)
+	case msg := <-anotherChannel:
+		println(msg)
+	}
 }
