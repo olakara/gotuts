@@ -13,7 +13,6 @@ func main() {
 
 func contextExample() {
 	ctx := context.Background()
-
 	ctxWithTimeout, cancel := context.WithTimeout(ctx, 2*time.Second) // 2 seconds timeout
 	//ctxWithTimeout, cancel := context.WithTimeout(ctx, 4*time.Second) // 4 seconds timeout
 	defer cancel()
@@ -28,6 +27,6 @@ func contextExample() {
 	case <-done:
 		println("task is complete")
 	case <-ctxWithTimeout.Done():
-		println("task timeout occurred")
+		println("task timeout occurred", ctxWithTimeout.Err())
 	}
 }
