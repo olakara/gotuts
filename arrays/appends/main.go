@@ -15,4 +15,7 @@ func main() {
 	// merging of two slice to one
 	another := append(names, newNames...)
 	fmt.Println(another)
+	clear(another)
+	fmt.Println(another, len(another), cap(another))
+	println("Hello World")
 }
