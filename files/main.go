@@ -1,6 +1,7 @@
-﻿package main
+package main
 
 import (
+	"io"
 	"log"
 	"os"
 )
@@ -11,13 +12,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// read the file
-	b1 := make([]byte, 5)
-	n1, err := f.Read(b1)
+	defer f.Close()
+
+	// read the file contents
+	data, err := io.ReadAll(f)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("%d bytes: %s\n", n1, string(b1[:n1]))
-	// close the file
-	defer f.Close()
+
+	log.Printf("%d bytes: %s\n", len(data), data)
+
 }
