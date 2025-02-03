@@ -25,4 +25,6 @@ func main() {
 	users := []User{user, user2}
 
 	fmt.Println(users)
+	fmt.Printf("%+v\n", users)
+	fmt.Printf("%#v\n", users)
 }
