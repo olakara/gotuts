@@ -8,4 +8,8 @@ func sayHello(names ...string) {
 
 func main() {
 	sayHello("Alice", "Bob", "Charlie")
+
+	// making a slice of strings
+	names := []string{"Dave", "Eve", "Frank"}
+	sayHello(names...)
 }
