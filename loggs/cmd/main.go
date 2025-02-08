@@ -8,7 +8,8 @@ import (
 func main() {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 	logger.Info("Info log")
-	slog.Info("hello", "count", 3)
-	//slog.Error("Error")
+	jsonLogger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	jsonLogger.Info("hello", "count", 3)
+	jsonLogger.Error("Error")
 	//slog.Debug("Debug")
 }
