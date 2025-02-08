@@ -1,5 +1,9 @@
 package main
 
-func PerformAtVenu(m Musician) {
-	m.Perform()
+type Performer interface {
+	Perform()
+}
+
+func PerformAtVenu(p Performer) {
+	p.Perform()
 }
