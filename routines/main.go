@@ -1,12 +1,18 @@
 package main
 
+import (
+	"fmt"
+	"time"
+)
+
 func say(s string) {
 	for i := 0; i < 3; i++ {
-		println(s)
+		time.Sleep(100 * time.Millisecond)
+		fmt.Println(s)
 	}
 }
 
 func main() {
-	say("world")
+	go say("world")
 	say("hello")
 }
