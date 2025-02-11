@@ -1,0 +1,5 @@
+﻿project: sample
+version: 1.0.0
+types:
+    - web
+    - api
