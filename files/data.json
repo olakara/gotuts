@@ -1,1 +1,6 @@
-{"Title":"Another book","Author":"John Doe","Price":11.95,"PublishedDate":"2025-02-14T18:52:40+04:00"}
+{
+    "Title": "Another book",
+    "Author": "John Doe",
+    "Price": 11.95,
+    "PublishedDate": "2025-02-14T18:52:40+04:00"
+}
