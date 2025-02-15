@@ -1,6 +1,18 @@
 ﻿package main
 
+func init() {
+	println("init")
+}
+
+func troubledFunction() {
+
+	println("troubledFunction")
+	panic("another problem")
+}
+
 func main() {
-	panic("a problem")
-	println("exit")
+	println("main start")
+	troubledFunction()
+	println("main end")
+
 }
