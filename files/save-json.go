@@ -7,13 +7,6 @@ import (
 	"time"
 )
 
-type Book struct {
-	Title         string
-	Author        string
-	Price         float32
-	PublishedDate string
-}
-
 func main() {
 
 	now := time.Now()
