@@ -6,6 +6,13 @@ func init() {
 
 func troubledFunction() {
 
+	// recover the panic
+	defer func() {
+		if r := recover(); r != nil {
+			println("recovered from", r)
+		}
+	}()
+
 	println("troubledFunction")
 	panic("another problem")
 }
