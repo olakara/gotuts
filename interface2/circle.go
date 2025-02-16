@@ -1,9 +1,11 @@
 package main
 
+import "math"
+
 type Circle struct {
 	Radius float64
 }
 
 func (c Circle) Area() float64 {
-	return 3.14 * c.Radius * c.Radius
+	return math.Pi * c.Radius * c.Radius
 }
