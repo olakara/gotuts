@@ -36,4 +36,6 @@ func main() {
 
 	person, _ := NewPerson()
 	fmt.Println("Person: ", person)
+	person.FirstName = "John"
+	fmt.Println("Updated Person: ", person)
 }
