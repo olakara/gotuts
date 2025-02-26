@@ -14,17 +14,19 @@ type JobCard struct {
 	Priority int    `json:"priority"`
 }
 
+func failOnError(err error, msg string) {
+	if err != nil {
+		log.Fatalf("%s: %s", msg, err)
+	}
+}
+
 func main() {
 	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
-	if err != nil {
-		log.Fatalf("Failed to connect to RabbitMQ: %v", err)
-	}
+	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
 
 	ch, err := conn.Channel()
-	if err != nil {
-		log.Fatalf("Failed to open a channel: %v", err)
-	}
+	failOnError(err, "Failed to open a channel")
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
@@ -35,9 +37,14 @@ func main() {
 		false,
 		nil,
 	)
-	if err != nil {
-		log.Fatalf("Failed to declare a queue: %v", err)
-	}
+	failOnError(err, "Failed to declare a queue")
+
+	err = ch.Qos(
+		1,     // prefetch count
+		0,     // prefetch size
+		false, // global
+	)
+	failOnError(err, "Failed to set QoS")
 
 	msgs, err := ch.Consume(
 		q.Name,
@@ -48,9 +55,7 @@ func main() {
 		false,
 		nil,
 	)
-	if err != nil {
-		log.Fatalf("Failed to register a consumer: %v", err)
-	}
+	failOnError(err, "Failed to register a consumer")
 
 	forever := make(chan bool)
 
