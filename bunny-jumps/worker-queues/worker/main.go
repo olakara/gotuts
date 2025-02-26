@@ -42,7 +42,7 @@ func main() {
 	msgs, err := ch.Consume(
 		q.Name,
 		"",
-		true,
+		false,
 		false,
 		false,
 		false,
@@ -67,6 +67,7 @@ func main() {
 			// Simulate job processing
 			time.Sleep(time.Duration(job.Priority) * time.Second)
 			fmt.Println("completed job")
+			d.Ack(true)
 		}
 	}()
 
