@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"log"
 	"time"
-
-	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type JobCard struct {
@@ -14,48 +12,19 @@ type JobCard struct {
 	Priority int    `json:"priority"`
 }
 
-func failOnError(err error, msg string) {
-	if err != nil {
-		log.Fatalf("%s: %s", msg, err)
-	}
-}
-
 func main() {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
-	failOnError(err, "Failed to connect to RabbitMQ")
-	defer conn.Close()
+	// Initialize RabbitMQ connection
+	rabbitmq, err := NewRabbitMQ("amqp://guest:guest@localhost:5672/", "maint", true, false, false, false)
+	FailOnError(err, "Failed to initialize RabbitMQ")
+	defer rabbitmq.Close()
 
-	ch, err := conn.Channel()
-	failOnError(err, "Failed to open a channel")
-	defer ch.Close()
+	// Set quality of service
+	err = rabbitmq.SetQos(1, 0, false)
+	FailOnError(err, "Failed to set QoS")
 
-	q, err := ch.QueueDeclare(
-		"maint",
-		true,
-		false,
-		false,
-		false,
-		nil,
-	)
-	failOnError(err, "Failed to declare a queue")
-
-	err = ch.Qos(
-		1,     // prefetch count
-		0,     // prefetch size
-		false, // global
-	)
-	failOnError(err, "Failed to set QoS")
-
-	msgs, err := ch.Consume(
-		q.Name,
-		"",
-		false,
-		false,
-		false,
-		false,
-		nil,
-	)
-	failOnError(err, "Failed to register a consumer")
+	// Start consuming messages
+	msgs, err := rabbitmq.ConsumeMessages(false, false, false, false)
+	FailOnError(err, "Failed to register a consumer")
 
 	forever := make(chan bool)
 
