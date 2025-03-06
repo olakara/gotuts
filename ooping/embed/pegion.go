@@ -6,6 +6,7 @@ type Pegion struct {
 	Bird
 	Name     string
 	location LatLong
+	//featherLength float64 // This is overridden from Bird with a different type
 }
 
 func (p *Pegion) GetLocation() LatLong {
