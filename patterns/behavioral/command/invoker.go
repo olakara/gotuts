@@ -12,4 +12,6 @@ func (i *Invoker) Run() {
 	for _, cmd := range i.repository {
 		cmd.Execute()
 	}
+	// Clear the repository
+	i.repository = []Report{}
 }
