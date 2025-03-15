@@ -5,12 +5,14 @@ import (
 	"net/http"
 )
 
+func sayHello(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, World!")
+}
+
 func main() {
 
 	const port = 8080
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello, World!"))
-	})
+	http.HandleFunc("/", sayHello)
 
 	fmt.Println("Server is running on port: ", port)
 	err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
