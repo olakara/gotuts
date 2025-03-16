@@ -3,12 +3,20 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"slices"
 )
 
 type language = string
 
 var name = flag.String("n", "World", "A name to say hello to.")
 var userLanguage language
+var validLanguages = []string{
+	"en",
+	"sp",
+	"fr",
+	"de",
+}
 
 const (
 	Spanish language = "sp"
@@ -23,6 +31,11 @@ func init() {
 	flag.StringVar(&userLanguage, "lang", "en", "Language to use are en, sp, fr, de")
 
 	flag.Parse()
+	if slices.Contains(validLanguages, userLanguage) == false {
+		fmt.Println("Invalid language")
+		flag.PrintDefaults()
+		os.Exit(1)
+	}
 }
 
 func main() {
