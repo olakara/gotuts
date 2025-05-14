@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -12,9 +13,16 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func snippetView(w http.ResponseWriter, r *http.Request) {
+
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil || id < 1 {
+		http.Error(w, "Invalid snippet ID", http.StatusBadRequest)
+		return
+	}
 	w.WriteHeader(http.StatusOK)	
 	log.Println("Received request for:", r.URL.Path)
-	w.Write([]byte("Snippet View"))
+	message:= "Snippet ID: " + strconv.Itoa(id)
+	w.Write([]byte(message))
 }
 
 func snippetCreate(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +42,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/{$}", home)
-	mux.HandleFunc("/snippet/view", snippetView)
+	mux.HandleFunc("/snippet/view/{id}", snippetView)
 	mux.HandleFunc("/snippet/create", snippetCreate)
 	mux.HandleFunc("/products/item/{itemID}", handleProductsItem)
 
